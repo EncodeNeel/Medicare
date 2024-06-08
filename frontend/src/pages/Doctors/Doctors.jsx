@@ -1,5 +1,7 @@
 import React from "react";
 
-export const Doctors = () => {
+const Doctors = () => {
   return <div>Doctors</div>;
 };
+
+export default Doctors;
