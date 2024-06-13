@@ -1,5 +1,5 @@
 import React from "react";
-
+import { motion } from "framer-motion";
 import heroImg01 from "../assets/images/hero-img01.png";
 import heroImg02 from "../assets/images/hero-img02.png";
 import heroImg03 from "../assets/images/hero-img03.png";
@@ -25,23 +25,43 @@ const Home = () => {
 
       <section className="hero__section pt-[60px] 2xl:h-[800px]">
         <div className="container">
-          <div className="flex flex-col lg:flex-row gap-[90px] items-center justify-between">
-            {/* ====== hero content ======*/}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col lg:flex-row gap-[90px] items-center justify-between"
+          >
+            {/* Hero content */}
             <div>
-              <div className="lg:w-[570px]">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="lg:w-[570px]"
+              >
                 <h1 className="text-[36px] leading-[46px] text-headingColor font-[800] md:text-[60px] md:leading-[70px]">
-                  We help patients live a healthy,longer life.
+                  We help patients live a healthy, longer life.
                 </h1>
                 <p className="text__para">
                   Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                   Accusamus itaque ea odit enim et quae atque.
                 </p>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="btn"
+                >
+                  Request an Appointment
+                </motion.button>
+              </motion.div>
 
-                <button className="btn">Request an Appointment</button>
-              </div>
-
-              {/* ======= hero counter */}
-              <div className="mt-[30px] lg:mt-[70px] flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-[30px]">
+              {/* Hero counters */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="mt-[30px] lg:mt-[70px] flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-[30px]"
+              >
                 <div>
                   <h2 className="text-[36px] loading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor">
                     30+
@@ -65,110 +85,249 @@ const Home = () => {
                   <span className="w-[100px] h-2 bg-irisBlueColor rounded-full block mt-[-14px]"></span>
                   <p className="text__para">Patient Satisfaction</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
-            {/* ====== hero content ======*/}
 
-            <div className="flex gap-[30px] justify-end">
+            {/* Hero images */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="flex gap-[30px] justify-end"
+            >
               <div>
-                <img className="w-full" src={heroImg01} alt="" />
+                <motion.img
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 1 }}
+                  className="w-full"
+                  src={heroImg01}
+                  alt="Hero Image 01"
+                />
               </div>
               <div className="mt-[30px]">
-                <img src={heroImg02} alt="" className="w-full mb-[30px]" />
-                <img src={heroImg03} alt="" className="w-full " />
+                <motion.img
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1, duration: 1 }}
+                  className="w-full mb-[30px]"
+                  src={heroImg02}
+                  alt="Hero Image 02"
+                />
+                <motion.img
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.2, duration: 1 }}
+                  className="w-full"
+                  src={heroImg03}
+                  alt="Hero Image 03"
+                />
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
       {/* ===== hero section end ====== */}
 
-      <section>
+      <section className="py-20 bg-gray-100">
         <div className="container">
-          <div className="lg:w-[470px] mx-auto">
-            <h2 className="heading text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="text-center mb-12"
+          >
+            <motion.h2
+              initial={{ y: 50 }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="text-4xl font-bold text-headingColor mb-4"
+            >
               Providing the best medical services
-            </h2>
-            <p className="text__para text-center">
-              World-class care for everyone.Our health System offers unmatched,
+            </motion.h2>
+            <motion.p
+              initial={{ y: 50 }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="text-lg text-gray-600 mb-8 mx-auto max-w-2xl"
+            >
+              World-class care for everyone. Our health system offers unmatched,
               expert health care.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]">
-            <div className="py-[30px] px-5">
-              <div className="flex items-center justify-center">
-                <img src={icon01} alt="" />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 1 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {/* Service Block 1 */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="py-8 px-6 bg-white shadow-lg rounded-lg"
+            >
+              <div className="flex justify-center mb-6">
+                <motion.img
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  src={icon01}
+                  alt="Icon 01"
+                  className="h-24"
+                />
               </div>
 
-              <div className="mt-[30px]">
-                <h2 className="text-[26px] leading-9 text-headingColor font-[700] text-center">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="text-center"
+              >
+                <motion.h2
+                  initial={{ y: 20 }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="text-xl font-bold text-headingColor mb-2"
+                >
                   Find a Doctor
-                </h2>
-                <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone.our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
-                </p>
-
-                <Link
-                  to="doctors"
-                  className="w-[50px] h-[50px] rounded-full border border-solid border-[#181A1e] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+                </motion.h2>
+                <motion.p
+                  initial={{ y: 20 }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="text-base text-gray-700 mb-4"
                 >
-                  <BsArrowRight className="group-hover:text-white w-6 h-5" />
-                </Link>
-              </div>
-            </div>
+                  World-class care for everyone. Our health system offers
+                  unmatched, expert health care. From the lab to the clinic.
+                </motion.p>
 
-            <div className="py-[30px] px-5">
-              <div className="flex items-center justify-center">
-                <img src={icon02} alt="" />
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  className="mx-auto w-10 h-10 flex items-center justify-center bg-primaryColor rounded-full"
+                >
+                  <Link to="doctors" className="text-white">
+                    <BsArrowRight className="w-6 h-6" />
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Service Block 2 */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="py-8 px-6 bg-white shadow-lg rounded-lg"
+            >
+              <div className="flex justify-center mb-6">
+                <motion.img
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  src={icon02}
+                  alt="Icon 02"
+                  className="h-24"
+                />
               </div>
 
-              <div className="mt-[30px]">
-                <h2 className="text-[26px] leading-9 text-headingColor font-[700] text-center">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="text-center"
+              >
+                <motion.h2
+                  initial={{ y: 20 }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="text-xl font-bold text-headingColor mb-2"
+                >
                   Find a Location
-                </h2>
-                <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone.our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
-                </p>
-
-                <Link
-                  to="doctors"
-                  className="w-[50px] h-[50px] rounded-full border border-solid border-[#181A1e] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+                </motion.h2>
+                <motion.p
+                  initial={{ y: 20 }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="text-base text-gray-700 mb-4"
                 >
-                  <BsArrowRight className="group-hover:text-white w-6 h-5" />
-                </Link>
-              </div>
-            </div>
+                  World-class care for everyone. Our health system offers
+                  unmatched, expert health care. From the lab to the clinic.
+                </motion.p>
 
-            <div className="py-[30px] px-5">
-              <div className="flex items-center justify-center">
-                <img src={icon03} alt="" />
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  className="mx-auto w-10 h-10 flex items-center justify-center bg-primaryColor rounded-full"
+                >
+                  <Link to="locations" className="text-white">
+                    <BsArrowRight className="w-6 h-6" />
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Service Block 3 */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="py-8 px-6 bg-white shadow-lg rounded-lg"
+            >
+              <div className="flex justify-center mb-6">
+                <motion.img
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  src={icon03}
+                  alt="Icon 03"
+                  className="h-24"
+                />
               </div>
 
-              <div className="mt-[30px]">
-                <h2 className="text-[26px] leading-9 text-headingColor font-[700] text-center">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="text-center"
+              >
+                <motion.h2
+                  initial={{ y: 20 }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="text-xl font-bold text-headingColor mb-2"
+                >
                   Book Appointment
-                </h2>
-                <p className="text-[16px] leading-7 text-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone.our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
-                </p>
-
-                <Link
-                  to="doctors"
-                  className="w-[50px] h-[50px] rounded-full border border-solid border-[#181A1e] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none"
+                </motion.h2>
+                <motion.p
+                  initial={{ y: 20 }}
+                  animate={{ y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="text-base text-gray-700 mb-4"
                 >
-                  <BsArrowRight className="group-hover:text-white w-6 h-5" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+                  World-class care for everyone. Our health system offers
+                  unmatched, expert health care. From the lab to the clinic.
+                </motion.p>
 
-      <About />
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  className="mx-auto w-10 h-10 flex items-center justify-center bg-primaryColor rounded-full"
+                >
+                  <Link to="appointments" className="text-white">
+                    <BsArrowRight className="w-6 h-6" />
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        <About />
+      </section>
 
       {/* =========== services section  =========== */}
       <section>
