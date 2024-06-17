@@ -3,7 +3,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import authRoute from "./Routes/auth.js";
+import authRoute from "./Routes/auth.js"; // Import the authRoute
+import userRoute from "./Routes/user.js";
+import doctorRoute from "./Routes/doctor.js";
+import reviewRoute from "./Routes/review.js"; // Import the doctorRoute
 
 dotenv.config();
 
@@ -18,7 +21,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
+
+// Routes
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/users", userRoute);
+app.use("/api/v1/doctors", doctorRoute);
+app.use("/api/v1/reviews", reviewRoute);
 
 app.get("/", (req, res) => {
   res.send("API is working");
@@ -37,5 +45,5 @@ mongoose
   });
 
 app.listen(port, () => {
-  console.log("Server is running on port " + port);
+  console.log(`Server is running on port ${port}`);
 });
