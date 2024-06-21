@@ -84,7 +84,7 @@ export const getUserProfile = async (req, res) => {
   const userId = req.userId;
 
   try {
-    const user = await User.finfindById(userId);
+    const user = await User.findById(userId);
 
     if (!user) {
       return res
@@ -118,13 +118,11 @@ export const getMyAppointments = async (req, res) => {
       "-password"
     );
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Appointments are getting",
-        data: doctors,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Appointments are getting",
+      data: doctors,
+    });
   } catch (err) {
     res.status(500).json({
       success: false,
