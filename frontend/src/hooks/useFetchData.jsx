@@ -4,7 +4,7 @@ import { token } from "../config";
 const useFetchData = (url) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); // State variable for error
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +24,7 @@ const useFetchData = (url) => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        setError(err.message);
+        setError(error.message); // Use `error.message` instead of `err.message`
       }
     };
     fetchData();
