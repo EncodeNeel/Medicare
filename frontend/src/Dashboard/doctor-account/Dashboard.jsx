@@ -54,7 +54,7 @@ const Dashboard = () => {
             <div className="mt-8">
               {tab === "overview" && <div>Overview content</div>}
               {tab === "appointments" && <div>Appointments content</div>}
-              {tab === "settings" && <div>Profile settings content</div>}
+              {tab === "setting" && <div>Profile settings content</div>}
             </div>
           </div>
         </div>
