@@ -10,9 +10,7 @@ const Profile = () => {
     gender: "",
     specialization: "",
     ticketPrice: 0,
-    qualifications: [
-      { startingDate: "", endingDate: "", degree: "", university: "" },
-    ],
+    qualifications: [],
     experiences: [
       { startingDate: "", endingDate: "", position: "", hospital: "" },
     ],
@@ -44,6 +42,28 @@ const Profile = () => {
   };
 
   //reusable input change function
+  const handleReusableInputChangeFunc = (key, index, event) => {
+    const { name, value } = event.target;
+
+    setFormData((prevFormData) => {
+      const updateItems = [...prevFormData[key]];
+
+      updateItems[index][name] = value;
+
+      return {
+        ...prevFormData,
+        [key]: updateItems,
+      };
+    });
+  };
+
+  // reusable function for deleting item
+  const deleteItem = (key, index) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [key]: prevFormData[key].filter((_, i) => i != index),
+    }));
+  };
 
   const addQualification = (e) => {
     e.preventDefault();
@@ -51,13 +71,18 @@ const Profile = () => {
     addItem("qualifications", {
       startingDate: "",
       endingDate: "",
-      degree: "",
-      university: "",
+      degree: "PHD",
+      university: "Silchar Medical college",
     });
   };
 
   const handleQualificationChange = (event, index) => {
     handleReusableInputChangeFunc("qualifications", index, event);
+  };
+
+  const deleteQualification = (e, index) => {
+    e.preventDefault();
+    deleteItem("qualifications", index);
   };
 
   return (
@@ -172,6 +197,7 @@ const Profile = () => {
                       name="startingDate"
                       value={item.startingDate}
                       className="form__input"
+                      onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                   <div>
@@ -181,6 +207,7 @@ const Profile = () => {
                       name="endingDate"
                       value={item.endingDate}
                       className="form__input"
+                      onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                 </div>
@@ -192,6 +219,7 @@ const Profile = () => {
                       name="degree"
                       value={item.degree}
                       className="form__input"
+                      onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                   <div>
@@ -201,11 +229,15 @@ const Profile = () => {
                       name="university"
                       value={item.university}
                       className="form__input"
+                      onChange={(e) => handleQualificationChange(e, index)}
                     />
                   </div>
                 </div>
 
-                <button className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px]">
+                <button
+                  onClick={(e) => deleteQualification(e, index)}
+                  className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px]"
+                >
                   <AiOutlineDelete />
                 </button>
               </div>
@@ -232,6 +264,9 @@ const Profile = () => {
                       name="startingDate"
                       value={item.startingDate}
                       className="form__input"
+                      onChange={(e) =>
+                        handleReusableInputChangeFunc("experiences", index, e)
+                      }
                     />
                   </div>
                   <div>
@@ -241,6 +276,9 @@ const Profile = () => {
                       name="endingDate"
                       value={item.endingDate}
                       className="form__input"
+                      onChange={(e) =>
+                        handleReusableInputChangeFunc("experiences", index, e)
+                      }
                     />
                   </div>
                 </div>
@@ -252,6 +290,9 @@ const Profile = () => {
                       name="position"
                       value={item.position}
                       className="form__input"
+                      onChange={(e) =>
+                        handleReusableInputChangeFunc("experiences", index, e)
+                      }
                     />
                   </div>
                   <div>
@@ -261,18 +302,34 @@ const Profile = () => {
                       name="hospital"
                       value={item.hospital}
                       className="form__input"
+                      onChange={(e) =>
+                        handleReusableInputChangeFunc("experiences", index, e)
+                      }
                     />
                   </div>
                 </div>
 
-                <button className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px]">
+                <button
+                  onClick={(e) => deleteItem("experiences", index)}
+                  className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px]"
+                >
                   <AiOutlineDelete />
                 </button>
               </div>
             </div>
           ))}
 
-          <button className="bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer">
+          <button
+            onClick={(e) =>
+              addItem("experiences", {
+                startingDate: "",
+                endingDate: "",
+                position: "",
+                hospital: "",
+              })
+            }
+            className="bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer"
+          >
             Add Experience
           </button>
         </div>
@@ -288,6 +345,9 @@ const Profile = () => {
                       name="day"
                       value={item.day}
                       className="form__input py-3.5"
+                      onChange={(e) =>
+                        handleReusableInputChangeFunc("timeSlots", index, e)
+                      }
                     >
                       <option value="">Select</option>
                       <option value="saturday">Saturday</option>
@@ -300,12 +360,15 @@ const Profile = () => {
                     </select>
                   </div>
                   <div>
-                    <p className="form__label">Staring Time*</p>
+                    <p className="form__label">Starting Time*</p>
                     <input
                       type="time"
                       name="startingTime"
                       value={item.startingTime}
                       className="form__input"
+                      onChange={(e) =>
+                        handleReusableInputChangeFunc("timeSlots", index, e)
+                      }
                     />
                   </div>
                   <div>
@@ -315,10 +378,16 @@ const Profile = () => {
                       name="endingTime"
                       value={item.endingTime}
                       className="form__input"
+                      onChange={(e) =>
+                        handleReusableInputChangeFunc("timeSlots", index, e)
+                      }
                     />
                   </div>
                   <div className="flex items-center">
-                    <button className="bg-red-600 p-2 rounded-full text-white text-[18px]  cursor-pointer mt-6">
+                    <button
+                      onClick={(e) => deleteItem("timeSlots", index)}
+                      className="bg-red-600 p-2 rounded-full text-white text-[18px]  cursor-pointer mt-6"
+                    >
                       <AiOutlineDelete />
                     </button>
                   </div>
@@ -327,7 +396,16 @@ const Profile = () => {
             </div>
           ))}
 
-          <button className="bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer">
+          <button
+            onClick={(e) =>
+              addItem("timeSlots", {
+                day: "",
+                startingTime: "",
+                endingTime: "",
+              })
+            }
+            className="bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer"
+          >
             Add TimeSlot
           </button>
         </div>
@@ -379,7 +457,7 @@ const Profile = () => {
         <div className="mt-7">
           <button
             type="submit"
-            oncLICK={updateProfileHandler}
+            onClick={updateProfileHandler}
             className="bg-PrimaryColor text-white text-[18px] leading-[30px] w-full py-3 px-4 rounded-lg"
           >
             Update Profile
