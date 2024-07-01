@@ -11,9 +11,7 @@ const Profile = () => {
     specialization: "",
     ticketPrice: 0,
     qualifications: [],
-    experiences: [
-      { startingDate: "", endingDate: "", position: "", hospital: "" },
-    ],
+    experiences: [],
     timeSlots: [{ day: "", startingTime: "", endingTime: "" }],
     about: "",
     photo: null,
@@ -61,7 +59,7 @@ const Profile = () => {
   const deleteItem = (key, index) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [key]: prevFormData[key].filter((_, i) => i != index),
+      [key]: prevFormData[key].filter((_, i) => i !== index),
     }));
   };
 
@@ -83,6 +81,26 @@ const Profile = () => {
   const deleteQualification = (e, index) => {
     e.preventDefault();
     deleteItem("qualifications", index);
+  };
+
+  const addExperience = (e) => {
+    e.preventDefault();
+
+    addItem("experiences", {
+      startingDate: "",
+      endingDate: "",
+      position: "Senior Surgeon",
+      hospital: "Silchar Medical",
+    });
+  };
+
+  const handleExperienceChange = (event, index) => {
+    handleReusableInputChangeFunc("experiences", index, event);
+  };
+
+  const deleteExperience = (e, index) => {
+    e.preventDefault();
+    deleteItem("experiences", index);
   };
 
   return (
@@ -264,9 +282,7 @@ const Profile = () => {
                       name="startingDate"
                       value={item.startingDate}
                       className="form__input"
-                      onChange={(e) =>
-                        handleReusableInputChangeFunc("experiences", index, e)
-                      }
+                      onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                   <div>
@@ -276,9 +292,7 @@ const Profile = () => {
                       name="endingDate"
                       value={item.endingDate}
                       className="form__input"
-                      onChange={(e) =>
-                        handleReusableInputChangeFunc("experiences", index, e)
-                      }
+                      onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                 </div>
@@ -290,9 +304,7 @@ const Profile = () => {
                       name="position"
                       value={item.position}
                       className="form__input"
-                      onChange={(e) =>
-                        handleReusableInputChangeFunc("experiences", index, e)
-                      }
+                      onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                   <div>
@@ -302,15 +314,13 @@ const Profile = () => {
                       name="hospital"
                       value={item.hospital}
                       className="form__input"
-                      onChange={(e) =>
-                        handleReusableInputChangeFunc("experiences", index, e)
-                      }
+                      onChange={(e) => handleExperienceChange(e, index)}
                     />
                   </div>
                 </div>
 
                 <button
-                  onClick={(e) => deleteItem("experiences", index)}
+                  onClick={(e) => deleteExperience(e, index)}
                   className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px]"
                 >
                   <AiOutlineDelete />
@@ -320,14 +330,7 @@ const Profile = () => {
           ))}
 
           <button
-            onClick={(e) =>
-              addItem("experiences", {
-                startingDate: "",
-                endingDate: "",
-                position: "",
-                hospital: "",
-              })
-            }
+            onClick={addExperience}
             className="bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer"
           >
             Add Experience
@@ -355,7 +358,7 @@ const Profile = () => {
                       <option value="monday">Monday</option>
                       <option value="tuesday">Tuesday</option>
                       <option value="wednesday">Wednesday</option>
-                      <option value="thursday">Thrusday</option>
+                      <option value="thursday">Thursday</option>
                       <option value="friday">Friday</option>
                     </select>
                   </div>
@@ -385,7 +388,10 @@ const Profile = () => {
                   </div>
                   <div className="flex items-center">
                     <button
-                      onClick={(e) => deleteItem("timeSlots", index)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deleteItem("timeSlots", index);
+                      }}
                       className="bg-red-600 p-2 rounded-full text-white text-[18px]  cursor-pointer mt-6"
                     >
                       <AiOutlineDelete />
@@ -397,13 +403,14 @@ const Profile = () => {
           ))}
 
           <button
-            onClick={(e) =>
+            onClick={(e) => {
+              e.preventDefault();
               addItem("timeSlots", {
                 day: "",
                 startingTime: "",
                 endingTime: "",
-              })
-            }
+              });
+            }}
             className="bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer"
           >
             Add TimeSlot
