@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import updateImageToCloudinary from "./../../utils/uploadCloudinary";
+import { BASE_URL, token } from "./../../config";
+import { toast } from "react-toastify";
 
-const Profile = () => {
+const Profile = ({ doctorData }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    password: "",
     phone: "",
     bio: "",
     gender: "",
@@ -12,10 +16,28 @@ const Profile = () => {
     ticketPrice: 0,
     qualifications: [],
     experiences: [],
-    timeSlots: [{ day: "", startingTime: "", endingTime: "" }],
+    timeSlots: [],
     about: "",
     photo: null,
   });
+
+  useEffect(() => {
+    setFormData({
+      name: doctorData?.name,
+      email: doctorData?.email,
+
+      phone: doctorData?.phone,
+      bio: doctorData?.bio,
+      gender: doctorData?.gender,
+      specialization: doctorData?.specialization,
+      ticketPrice: doctorData?.ticketPrice,
+      qualifications: doctorData?.qualifications,
+      experiences: doctorData?.experiences,
+      timeSlots: doctorData?.timeSlots,
+      about: doctorData?.about,
+      photo: doctorData?.photo,
+    });
+  }, [doctorData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,10 +47,34 @@ const Profile = () => {
     }));
   };
 
-  const handleFileInputChange = (e) => {};
+  const handleFileInputChange = async (e) => {
+    const file = event.target.files[0];
+    const data = await updateImageToCloudinary(file);
+
+    setFormData({ ...formData, photo: data?.url });
+  };
 
   const updateProfileHandler = async (e) => {
     e.preventDefault();
+
+    try {
+      const res = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        throw Error(result.message);
+      }
+      toast.success(result.message);
+    } catch (error) {
+      toast.error(err.message);
+    }
   };
 
   // reusable function for adding item
@@ -99,6 +145,25 @@ const Profile = () => {
   };
 
   const deleteExperience = (e, index) => {
+    e.preventDefault();
+    deleteItem("experiences", index);
+  };
+
+  const addTimeSlot = (e) => {
+    e.preventDefault();
+
+    addItem("timeSlots", {
+      day: "sunday",
+      startingTime: "10:00",
+      endingTime: "04:30",
+    });
+  };
+
+  const handleTimeSlotChange = (event, index) => {
+    handleReusableInputChangeFunc("timeSlots", index, event);
+  };
+
+  const deleteTimeSlot = (e, index) => {
     e.preventDefault();
     deleteItem("experiences", index);
   };
@@ -348,9 +413,7 @@ const Profile = () => {
                       name="day"
                       value={item.day}
                       className="form__input py-3.5"
-                      onChange={(e) =>
-                        handleReusableInputChangeFunc("timeSlots", index, e)
-                      }
+                      onChange={(e) => handleTimeSlotChange(index, e)}
                     >
                       <option value="">Select</option>
                       <option value="saturday">Saturday</option>
@@ -369,9 +432,7 @@ const Profile = () => {
                       name="startingTime"
                       value={item.startingTime}
                       className="form__input"
-                      onChange={(e) =>
-                        handleReusableInputChangeFunc("timeSlots", index, e)
-                      }
+                      onChange={(e) => handleTimeSlotChange(index, e)}
                     />
                   </div>
                   <div>
@@ -381,12 +442,13 @@ const Profile = () => {
                       name="endingTime"
                       value={item.endingTime}
                       className="form__input"
-                      onChange={(e) =>
-                        handleReusableInputChangeFunc("timeSlots", index, e)
-                      }
+                      onChange={(e) => handleTimeSlotChange(index, e)}
                     />
                   </div>
-                  <div className="flex items-center">
+                  <div
+                    onClick={(e) => deleteTimeSlot(e, index)}
+                    className="flex items-center"
+                  >
                     <button
                       onClick={(e) => {
                         e.preventDefault();
@@ -403,14 +465,7 @@ const Profile = () => {
           ))}
 
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              addItem("timeSlots", {
-                day: "",
-                startingTime: "",
-                endingTime: "",
-              });
-            }}
+            onClick={addTimeSlot}
             className="bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer"
           >
             Add TimeSlot
@@ -465,7 +520,7 @@ const Profile = () => {
           <button
             type="submit"
             onClick={updateProfileHandler}
-            className="bg-PrimaryColor text-white text-[18px] leading-[30px] w-full py-3 px-4 rounded-lg"
+            className="bg-primaryColor text-white text-[18px] leading-[30px] w-full py-3 px-4 rounded-lg"
           >
             Update Profile
           </button>
