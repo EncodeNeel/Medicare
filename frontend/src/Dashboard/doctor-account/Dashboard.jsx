@@ -7,6 +7,7 @@ import Tabs from "./Tabs"; // Ensure the correct path
 import starIcon from "../../assets/images/Star.png";
 import DoctorAbout from "./../../pages/Doctors/DoctorAbout";
 import Profile from "./Profile";
+import Appointments from "./Appointments";
 
 const Dashboard = () => {
   const { data, loading, error } = useFetchData(
@@ -94,7 +95,9 @@ const Dashboard = () => {
                   />
                 </div>
               )}
-              {tab === "appointments" && <div>Appointments content</div>}
+              {tab === "appointments" && (
+                <Appointments appointments={data.appointments} />
+              )}
               {tab === "setting" && <Profile doctorData={data} />}
             </div>
           </div>
