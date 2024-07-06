@@ -4,7 +4,7 @@ import starIcon from "../../assets/images/Star.png";
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
-import useFetchData from "../../hooks/useFetchData"; // Add this import statement
+import useFetchData from "../../hooks/useFetchData"; // Ensure this import is correct
 import { BASE_URL } from "./../../config";
 import Loader from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
@@ -18,22 +18,12 @@ const DoctorDetails = () => {
     data: doctor,
     loading,
     error,
+    fetchData: refetchDoctorData, // Add this to trigger data refetch
   } = useFetchData(`${BASE_URL}/doctors/${id}`);
 
-  const {
-    name,
-    qualifications,
-    experiences,
-    timeSlots,
-    reviews,
-    bio,
-    about,
-    averageRating,
-    totalRating,
-    specialization,
-    ticketPrice,
-    photo,
-  } = doctor;
+  const handleReviewSubmit = () => {
+    refetchDoctorData(); // Trigger data refetch after a review is submitted
+  };
 
   return (
     <section>
@@ -45,26 +35,26 @@ const DoctorDetails = () => {
             <div className="md:col-span-2">
               <div className="flex items-center gap-5">
                 <figure className="max-w-[200px] max-h-[400px]">
-                  <img src={photo} alt="" className="w-full" />
+                  <img src={doctor.photo} alt="" className="w-full" />
                 </figure>
                 <div>
                   <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded">
-                    {specialization}
+                    {doctor.specialization}
                   </span>
                   <h3 className="text-headingColor text-[22px] leading-9 mt-3 font-bold">
-                    {name}
+                    {doctor.name}
                   </h3>
                   <div className="flex items-center gap-[6px]">
                     <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
                       <img src={starIcon} alt="" />
-                      {averageRating}
+                      {doctor.averageRating}
                     </span>
                     <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
-                      ({totalRating})
+                      ({doctor.totalRating})
                     </span>
                   </div>
                   <p className="text__para text-[14px] leading-6 md:text-[15px] lg:max-w-[390px]">
-                    {bio}
+                    {doctor.bio}
                   </p>
                 </div>
               </div>
@@ -93,8 +83,21 @@ const DoctorDetails = () => {
               </div>
 
               <div className="mt-[50px]">
-                {tab === "about" && <DoctorAbout />}
-                {tab === "feedback" && <Feedback />}
+                {tab === "about" && (
+                  <DoctorAbout
+                    name={doctor.name}
+                    about={doctor.about}
+                    qualifications={doctor.qualifications}
+                    experiences={doctor.experiences}
+                  />
+                )}
+                {tab === "feedback" && (
+                  <Feedback
+                    reviews={doctor.reviews}
+                    totalRating={doctor.totalRating}
+                    onReviewSubmit={handleReviewSubmit}
+                  />
+                )}
               </div>
             </div>
 
