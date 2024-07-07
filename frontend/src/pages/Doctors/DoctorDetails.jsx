@@ -102,7 +102,11 @@ const DoctorDetails = () => {
             </div>
 
             <div>
-              <SidePanel />
+              <SidePanel
+                doctorId={doctor._id}
+                ticketPrice={doctor.ticketPrice} // Ensure these fields exist in the doctor data
+                timeSlots={doctor.timeSlots} // Ensure these fields exist in the doctor data
+              />
             </div>
           </div>
         )}
