@@ -94,7 +94,7 @@ const DoctorDetails = () => {
                 {tab === "feedback" && (
                   <Feedback
                     reviews={doctor.reviews}
-                    totalRating={doctor.totalRating}
+                    totalRating={doctor.reviews.length} // Update this to dynamically calculate the total reviews
                     onReviewSubmit={handleReviewSubmit}
                   />
                 )}
